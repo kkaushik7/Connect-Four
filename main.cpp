@@ -17,6 +17,7 @@ int main() {
 	game.player_active = 1;
 	int which_player = 0;
 	game.game_over = false;
+	bool is_stalemate = false; // Handle exceptions
 
 	do{
 		which_player++;
@@ -39,10 +40,19 @@ int main() {
 		game.display_board();
 		// Check if the game is over or not
 		game.game_over = game.is_game_over();
-	} while (!game.game_over);
-	// Victory message
-	cout << endl << endl << "PLAYER " << game.player_active << " WON !!! CONGRATULATIONS!!! :) " << endl << endl;
+		if (which_player == 42 && game.game_over != true)
+			is_stalemate == true;
+	} while (!game.game_over && !is_stalemate);
 
+	// Get the game results
+	if (!is_stalemate) {
+		// Victory message
+		cout << endl << endl << "PLAYER " << game.player_active << " WON !!! CONGRATULATIONS!!! :) " << endl << endl;
+	}
+	else {
+		// Stalemate message
+		cout << endl << endl << "THE GAME IS A STALEMATE!! :(" << endl;
+	}
 	return 0;
 		
 }
