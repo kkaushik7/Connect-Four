@@ -3,9 +3,9 @@ Implementation of the [Connect Four](https://en.wikipedia.org/wiki/Connect_Four)
 Team Members    
 -----     
     
-+Kaushik Krishnan     
-+Tarun Giri     
-+Kailash Sridhar    
+  *Kaushik Krishnan     
+  *Tarun Giri     
+  *Kailash Sridhar    
 
 Rules of the game    
 -----     
