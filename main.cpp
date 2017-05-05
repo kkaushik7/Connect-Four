@@ -64,7 +64,7 @@ int main() {
 			// Check if the game is over or not
 			game.game_over = game.is_game_over();
 			if (which_player == 42 && game.game_over != true)
-				is_stalemate == true;
+				is_stalemate = true;
 		} while (!game.game_over && !is_stalemate);
 
 		// Update the score based on who won this round
