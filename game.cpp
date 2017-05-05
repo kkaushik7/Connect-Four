@@ -1,9 +1,11 @@
 # include <iostream>
+# include <windows.h>
+# include <stdlib.h>
 # include "gameGrid.h"
 
 using namespace std;
 
-// Initialize the game board
+// Initialize the game board all to empty characters
 void connectFour::initialize_board() {
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 7; j++) {
@@ -18,27 +20,97 @@ connectFour::connectFour() {
 	game_over = false;
 	initialize_board(); // Initialize the board
 	player_preference = -1; // The column where every player wants to put his coin in
+	player_one_score = 0;  // Keep track of how many games player 1 has won
+	player_two_score = 0;  // Keep track of how many games player 2 has won
+}
+
+// The Welcome Screen
+void connectFour::welcome_screen() {
+	system("cls");
+	cout << "\t\t\t$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
+	cout << "\t\t\t$$                                          $$" << endl;
+	cout << "\t\t\t$$              CONNECT FOUR                $$" << endl;
+	cout << "\t\t\t$$                                          $$" << endl;
+	cout << "\t\t\t$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
+	cout << endl << endl << endl;
+	cout << "\tConnect four characters horizontally, vertically or diagonally to win the game" << endl << endl;
+	cout << "\tAn implementation by Kaushik, Kailash and Tarun " << endl << endl;
+	cout << "\tINSTRUCTIONS" << endl << endl;
+	cout << " \t\t 1. Use keyboard to play" << endl;
+	cout << " \t\t 2. Enter input using numbers 1-7" << endl;
+	cout << " \t\t 3. Press 'y' at the end of each game to play a series of matches" << endl;
+	cout << " \t\t 4. Press 'n' at the end of a game to end a series of matches" << endl;
+	cout << " \t\t 5. Press Ctrl+C to exit the game at any point" << endl;
+	cout << endl;
+	cout << "How many players (1 or 2)? : "; cin >> num_players; cout << endl;
+	if (num_players == 2) {
+		cout << "Player 1 name : "; cin >> player_one_name; cout << endl;
+		cout << "Player 2 name : "; cin >> player_two_name; cout << endl;
+	}
+	else {
+		cout << "Player name : "; cin >> player_one_name; cout << endl;
+		player_two_name = "Computer";
+	}
+}
+
+// Reset the game after every round
+void connectFour::reset_game() {
+	for (int i = 0; i < 7; i++) {
+		available_slot[i] = 5;
+	}
+	player_active = 1;
+	game_over = false;
+	initialize_board(); // Initialize the board
+	player_preference = -1;
 }
 
 // Display the board
 void connectFour::display_board() {
-	cout << "CONNECT FOUR - Connect four characters horizontally, vertically or diagonally to win!!" << endl;
+	cout << "\t\t\t$**********************$" << endl;
+	cout << "\t\t\t$     CONNECT FOUR     $" << endl;
+	cout << "\t\t\t$**********************$" << endl << endl;
+	cout << "\t "<<player_one_name << " : " << player_one_score << "\t\t\t";
+	cout << player_two_name << " : " << player_two_score << endl << endl;
 	cout << '\t';
 	for (int k = 1; k <= 7; k++)
-		cout << k << '\t';
+		cout <<"  "<< k <<"  "<< '\t';
+	cout << endl;
+	// The print line routine
+	cout << '\t';
+	for (int k = 1; k <= 7; k++)
+		cout << "+---+" << '\t';
 	cout << endl;
 	for (int i = 0; i < 6; i++) {
-		cout << 1+i << '\t';
+		cout << 1 + i << '\t';
 		for (int j = 0; j < 7; j++) {
-			cout << board[i][j] << '\t';
+			cout << "| " << board[i][j] << " |" << '\t';
 		}
-		cout << '\n'<<endl;
+		cout << endl;
+		// The print line routine
+		cout << '\t';
+		for (int k = 1; k <= 7; k++)
+			cout << "+---+" << '\t';
+		cout << endl;
 	}
 }
 
 // Update the slot available to be filled in every column
 void connectFour::update_available_slots() {
 	--available_slot[player_preference-1];	
+}
+
+// Generate the computer response
+int connectFour::computer_response() {
+	bool correct = true;
+	int resp;
+	// The below loop is run to ensure computer generates a response for a column which has an available slot
+	while (correct) {
+		resp = rand() % 6 + 1;
+		if (available_slot[resp] > 0) {
+			return resp;
+			correct = false;
+		}
+	}
 }
 
 // Update the board after every move
@@ -53,8 +125,8 @@ void connectFour::update_board(){
 
 // Check for 4 consecutive elements horizontally
 bool connectFour::check_horizontal() {
-	int j = player_preference - 1;    //current row
-	int i = available_slot[j] + 1;    //current column
+	int j = player_preference - 1;    //current column
+	int i = available_slot[j] + 1;    //current row
 	char check;
 	if (player_active == 1) {
 		check = player_one;

@@ -1,6 +1,7 @@
 #pragma once
 
 # include <iostream>
+# include <string>
 
 using namespace std;
 
@@ -11,16 +12,22 @@ public:
 	char board[6][7];                          // The game board
 	int player_preference;                     // The column where every player wants to put his coin in
 	int available_slot[7] = { 5,5,5,5,5,5,5 }; // Contains the available slot for every column
+	string player_one_name, player_two_name;
+	int player_one_score, player_two_score;
+	int num_players;
 
 	// Game Constants
-	char empty = '-';       // Empty State in the Grid
-	char player_one = '*';  // Player 1's symbol
-	char player_two = 'o';  // Player 2's symbol
+	const char empty = ' ';       // Empty State in the Grid
+	const char player_one = '*';  // Player 1's symbol
+	const char player_two = 'o';  // Player 2's symbol
 
 	// Member functions
 	connectFour();                 // Constructor
+	void welcome_screen();         // The Welcome Screen
 	void initialize_board();       // Initialize an empty game board
 	void display_board();          // Display the board after every move
+	void reset_game();             // Reset the gamer after every round
+	int computer_response();      // Get the computer response
 	void update_available_slots(); // Update the available slots array
 	void update_board();           // Update the board after every move
 	bool check_horizontal();       // Check for 4 consecutive elements horizontally
