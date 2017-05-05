@@ -96,7 +96,7 @@ int main() {
 	if (game.player_one_score + game.player_two_score >= 2) {
 		if (game.player_one_score > game.player_two_score)
 			cout << game.player_one_name << " won the series! " << endl << endl;
-		else if (game.player_two_score > game.player_two_score)
+		else if (game.player_two_score > game.player_one_score)
 			cout << game.player_two_name << " won the series! " << endl << endl;
 		else
 			cout << "The series was a tie!" << endl << endl;
