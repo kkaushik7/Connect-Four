@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Initialize the game board all to empty characters
+// Initialize the game board
 void connectFour::initialize_board() {
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 7; j++) {
@@ -20,8 +20,8 @@ connectFour::connectFour() {
 	game_over = false;
 	initialize_board(); // Initialize the board
 	player_preference = -1; // The column where every player wants to put his coin in
-	player_one_score = 0;  // Keep track of how many games player 1 has won
-	player_two_score = 0;  // Keep track of how many games player 2 has won
+	player_one_score = 0;
+	player_two_score = 0;
 }
 
 // The Welcome Screen
@@ -69,11 +69,11 @@ void connectFour::display_board() {
 	cout << "\t\t\t$**********************$" << endl;
 	cout << "\t\t\t$     CONNECT FOUR     $" << endl;
 	cout << "\t\t\t$**********************$" << endl << endl;
-	cout << "\t "<<player_one_name << " : " << player_one_score << "\t\t\t";
+	cout << "\t " << player_one_name << " : " << player_one_score << "\t\t\t";
 	cout << player_two_name << " : " << player_two_score << endl << endl;
 	cout << '\t';
 	for (int k = 1; k <= 7; k++)
-		cout <<"  "<< k <<"  "<< '\t';
+		cout << "  " << k << "  " << '\t';
 	cout << endl;
 	// The print line routine
 	cout << '\t';
@@ -93,7 +93,6 @@ void connectFour::display_board() {
 		cout << endl;
 	}
 }
-
 // Update the slot available to be filled in every column
 void connectFour::update_available_slots() {
 	--available_slot[player_preference-1];	
@@ -103,10 +102,9 @@ void connectFour::update_available_slots() {
 int connectFour::computer_response() {
 	bool correct = true;
 	int resp;
-	// The below loop is run to ensure computer generates a response for a column which has an available slot
 	while (correct) {
 		resp = rand() % 6 + 1;
-		if (available_slot[resp] > 0) {
+		if (available_slot[resp] != -1) {
 			return resp;
 			correct = false;
 		}
