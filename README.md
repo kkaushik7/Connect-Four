@@ -3,11 +3,11 @@ Implementation of the [Connect Four](https://en.wikipedia.org/wiki/Connect_Four)
 Team Members    
 -----     
     
-  *Kaushik Krishnan     
-  *Tarun Giri     
-  *Kailash Sridhar    
+* Kaushik Krishnan     
+* Tarun Giri     
+* Kailash Sridhar    
   
-*Note*: This code works only in a Windows Operating System as it uses the header file *<Windows.h>*    
+**Note**: This code works only in a Windows Operating System as it uses the header file *<Windows.h>*    
 
 
 Rules of the game    
